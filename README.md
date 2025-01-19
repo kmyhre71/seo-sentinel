@@ -1,7 +1,7 @@
 # SEO Sentinel
 
 <p align="center">
-  <img src="src/assets/icons/icon128.png" alt="SEO Sentinel Logo" width="128" height="128">
+  <img src="src/icons/icon128.png" alt="SEO Sentinel Logo" width="128" height="128">
 </p>
 
 <h4 align="center">An intelligent Chrome extension for comprehensive SEO analysis and optimization</h4>

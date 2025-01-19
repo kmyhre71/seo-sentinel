@@ -68,7 +68,7 @@ global.testUtils = {
             <div class="container">
                 <header>
                     <div class="logo">
-                        <img src="../../assets/icons/icon48.png" alt="SEO Sentinel Logo">
+                        <img src="../../src/icons/icon48.png" alt="SEO Sentinel Logo">
                         <h1>SEO Sentinel</h1>
                     </div>
                     <div class="actions">

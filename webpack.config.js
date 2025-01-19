@@ -73,23 +73,23 @@ const config = {
                         }
                     }
                 ]
-            },
-            // Images
-            {
-                test: /\.(png|jpg|jpeg|gif|svg)$/i,
-                type: 'asset/resource',
-                generator: {
-                    filename: 'assets/images/[name][ext]'
-                }
-            },
-            // Fonts
-            {
-                test: /\.(woff|woff2|eot|ttf|otf)$/i,
-                type: 'asset/resource',
-                generator: {
-                    filename: 'assets/fonts/[name][ext]'
-                }
-            }
+            } //,
+//            // Images
+//            {
+//                test: /\.(png|jpg|jpeg|gif|svg)$/i,
+//                type: 'asset/resource',
+//                generator: {
+//                    filename: 'assets/images/[name][ext]'
+//                }
+//            },
+//            // Fonts
+//            {
+//                test: /\.(woff|woff2|eot|ttf|otf)$/i,
+//                type: 'asset/resource',
+//                generator: {
+//                    filename: 'assets/fonts/[name][ext]'
+//                }
+//            }
         ]
     },
     
@@ -103,10 +103,6 @@ const config = {
         // Copy static assets
         new CopyPlugin({
             patterns: [
-                {
-                    from: 'src/assets',
-                    to: 'assets'
-                },
                 {
                     from: 'src/icons',
                     to: 'icons'
@@ -178,7 +174,6 @@ const config = {
         extensions: ['.js', '.json'],
         alias: {
             '@': path.resolve(__dirname, 'src'),
-            '@assets': path.resolve(__dirname, 'src/assets'),
             '@components': path.resolve(__dirname, 'src/components'),
             '@utils': path.resolve(__dirname, 'src/utils'),
             '@icons': path.resolve(__dirname, 'src/icons')
