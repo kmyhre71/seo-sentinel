@@ -41,4 +41,4 @@
 
 1. Clone this repository:
 ```bash
-git clone https://github.com/your-username/seo-sentinel.git
+git clone https://github.com/kmyhre71/seo-sentinel.git
