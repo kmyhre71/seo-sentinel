@@ -65,10 +65,11 @@ const config = {
                         options: {
                             postcssOptions: {
                                 plugins: [
-                                    'postcss-preset-env',
-                                    'autoprefixer'
+                                    ['postcss-preset-env', {}],
+                                    ['autoprefixer', {}]
                                 ]
-                            }
+                            },
+                            sourceMap: !isProduction
                         }
                     }
                 ]
@@ -104,16 +105,16 @@ const config = {
             patterns: [
                 {
                     from: 'src/assets',
-                    to: 'assets',
-                    globOptions: {
-                        ignore: ['**/*.md']
-                    }
+                    to: 'assets'
+                },
+                {
+                    from: 'src/icons',
+                    to: 'icons'
                 },
                 {
                     from: 'manifest.json',
                     to: 'manifest.json',
                     transform(content) {
-                        // Generate manifest for appropriate environment
                         const manifest = JSON.parse(content);
                         if (!isProduction) {
                             manifest.name += ' (Dev)';
@@ -179,7 +180,8 @@ const config = {
             '@': path.resolve(__dirname, 'src'),
             '@assets': path.resolve(__dirname, 'src/assets'),
             '@components': path.resolve(__dirname, 'src/components'),
-            '@utils': path.resolve(__dirname, 'src/utils')
+            '@utils': path.resolve(__dirname, 'src/utils'),
+            '@icons': path.resolve(__dirname, 'src/icons')
         }
     },
     

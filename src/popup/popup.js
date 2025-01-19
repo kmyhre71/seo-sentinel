@@ -1,6 +1,6 @@
 // Utility functions
-const $ = (selector) => document.querySelector(selector);
-const $ = (selector) => document.querySelectorAll(selector);
+const querySelector = (selector) => document.querySelector(selector);
+const querySelectorAll = (selector) => document.querySelectorAll(selector);
 
 // State management
 let currentTab = 'overview';
@@ -16,19 +16,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // Tab management
 function initializeTabs() {
-    const tabs = $('.tab');
+    const tabs = querySelectorAll('.tab');
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
-            // Remove active class from all tabs and content
             tabs.forEach(t => t.classList.remove('active'));
-            $('.tab-content').forEach(content => content.classList.remove('active'));
+            querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
             
-            // Add active class to clicked tab and its content
             tab.classList.add('active');
             currentTab = tab.dataset.tab;
-            $(`#${currentTab}`).classList.add('active');
+            querySelector(`#${currentTab}`).classList.add('active');
             
-            // Update content for the selected tab
             updateTabContent(currentTab);
         });
     });
@@ -36,9 +33,9 @@ function initializeTabs() {
 
 // Button initialization
 function initializeButtons() {
-    $('#settingsBtn').addEventListener('click', openSettings);
-    $('#generateReport').addEventListener('click', generateReport);
-    $('#exportData').addEventListener('click', exportData);
+    querySelector('#settingsBtn').addEventListener('click', openSettings);
+    querySelector('#generateReport').addEventListener('click', generateReport);
+    querySelector('#exportData').addEventListener('click', exportData);
 }
 
 // Page analysis
@@ -46,22 +43,37 @@ async function analyzePage() {
     try {
         const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
         
+        // Check if content script is ready
+        if (chrome.runtime.lastError) {
+            throw new Error('Content script not ready');
+        }
+        
         // Get page data from content script
         const response = await chrome.tabs.sendMessage(tab.id, { 
             action: 'analyzePage' 
         });
+        
+        if (!response) {
+            throw new Error('No response from content script');
+        }
         
         pageData = response;
         return response;
     } catch (error) {
         console.error('Error analyzing page:', error);
         showError('Failed to analyze page. Please refresh and try again.');
+        // Add visual feedback
+        $('#seoScore').textContent = 'N/A';
+        return null;
     }
 }
 
 // UI updates
 function updateUI() {
-    if (!pageData) return;
+    if (!pageData) {
+        showError('No page data available');
+        return;
+    }
     
     updateOverview();
     updateOnPageSEO();
@@ -70,15 +82,23 @@ function updateUI() {
 }
 
 function updateOverview() {
+    if (!pageData) {
+        showError('No page data available');
+        return;
+    }
     const { seoScore, metaTags, links, performance } = pageData;
     
+    if (!seoScore || !metaTags || !links || !performance) {
+        showError('Incomplete page data');
+        return;
+    }
     // Update SEO score
-    $('#seoScore').textContent = seoScore;
+    querySelector('#seoScore').textContent = seoScore;
     
     // Update quick stats
-    $('#metaStatus').textContent = `${metaTags.valid}/${metaTags.total}`;
-    $('#linkStatus').textContent = `${links.valid}/${links.total}`;
-    $('#perfStatus').textContent = `${performance.score}%`;
+    querySelector('#metaStatus').textContent = `${metaTags.valid}/${metaTags.total}`;
+    querySelector('#linkStatus').textContent = `${links.valid}/${links.total}`;
+    querySelector('#perfStatus').textContent = `${performance.score}%`;
 }
 
 function updateOnPageSEO() {
@@ -86,7 +106,7 @@ function updateOnPageSEO() {
     
     // Title analysis
     const titleAnalysis = analyzeTitleTag(title);
-    $('#titleAnalysis').innerHTML = `
+    querySelector('#titleAnalysis').innerHTML = `
         <div class="${titleAnalysis.status}">
             <h4>Length: ${title.length} characters ${titleAnalysis.lengthOk ? '✓' : '⚠'}</h4>
             <p>${titleAnalysis.message}</p>
@@ -95,7 +115,7 @@ function updateOnPageSEO() {
     
     // Meta description analysis
     const descAnalysis = analyzeMetaDescription(description);
-    $('#metaDescAnalysis').innerHTML = `
+    querySelector('#metaDescAnalysis').innerHTML = `
         <div class="${descAnalysis.status}">
             <h4>Length: ${description.length} characters ${descAnalysis.lengthOk ? '✓' : '⚠'}</h4>
             <p>${descAnalysis.message}</p>
@@ -103,19 +123,19 @@ function updateOnPageSEO() {
     `;
     
     // Headers analysis
-    $('#headersAnalysis').innerHTML = generateHeadersAnalysis(headers);
+    querySelector('#headersAnalysis').innerHTML = generateHeadersAnalysis(headers);
     
     // Content analysis
-    $('#contentAnalysis').innerHTML = generateContentAnalysis(content);
+    querySelector('#contentAnalysis').innerHTML = generateContentAnalysis(content);
 }
 
 function updateLinks() {
     const { internal, external, broken } = pageData.links;
     
     // Update counts
-    $('#internalLinksCount').textContent = internal.length;
-    $('#externalLinksCount').textContent = external.length;
-    $('#brokenLinksCount').textContent = broken.length;
+    querySelector('#internalLinksCount').textContent = internal.length;
+    querySelector('#externalLinksCount').textContent = external.length;
+    querySelector('#brokenLinksCount').textContent = broken.length;
     
     // Generate links list
     const linksList = $('#linksList');
@@ -126,10 +146,10 @@ function updateTechnical() {
     const { mobile, speed, ssl, robots } = pageData.technical;
     
     // Update technical checks
-    $('#mobileFriendly').innerHTML = generateTechnicalCheck('Mobile Friendly', mobile);
-    $('#pageSpeed').innerHTML = generateTechnicalCheck('Page Speed', speed);
-    $('#sslStatus').innerHTML = generateTechnicalCheck('SSL Status', ssl);
-    $('#robotsTxt').innerHTML = generateTechnicalCheck('Robots.txt', robots);
+    querySelector('#mobileFriendly').innerHTML = generateTechnicalCheck('Mobile Friendly', mobile);
+    querySelector('#pageSpeed').innerHTML = generateTechnicalCheck('Page Speed', speed);
+    querySelector('#sslStatus').innerHTML = generateTechnicalCheck('SSL Status', ssl);
+    querySelector('#robotsTxt').innerHTML = generateTechnicalCheck('Robots.txt', robots);
 }
 
 // Analysis helper functions
@@ -305,10 +325,30 @@ function downloadFile(filename, content, type) {
     URL.revokeObjectURL(url);
 }
 
+// Replace the showError function with:
 function showError(message) {
-    // Implementation of error messaging system
-    console.error(message);
-    // You could add a UI element to show errors to users
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    errorDiv.innerHTML = `
+        <div class="error-content">
+            <span class="material-icons">error</span>
+            <p>${message}</p>
+        </div>
+    `;
+    
+    // Remove any existing error messages
+    const existingError = querySelector('.error-message');
+    if (existingError) {
+        existingError.remove();
+    }
+    
+    // Insert at the top of the popup
+    document.body.insertBefore(errorDiv, document.body.firstChild);
+    
+    // Auto-remove after 5 seconds
+    setTimeout(() => {
+        errorDiv.remove();
+    }, 5000);
 }
 
 // Create detailed HTML report
