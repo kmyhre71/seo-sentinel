@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Sentinel</title>
+    <link rel="stylesheet" href="popup.css">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="../../assets/icons/icon48.png" alt="SEO Sentinel Logo">
+                <h1>SEO Sentinel</h1>
+            </div>
+            <div class="actions">
+                <button id="settingsBtn" class="icon-button">
+                    <span class="material-icons">settings</span>
+                </button>
+            </div>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab active" data-tab="overview">Overview</button>
+            <button class="tab" data-tab="onpage">On-Page SEO</button>
+            <button class="tab" data-tab="links">Links</button>
+            <button class="tab" data-tab="technical">Technical</button>
+        </nav>
+
+        <main>
+            <!-- Overview Tab -->
+            <section id="overview" class="tab-content active">
+                <div class="score-card">
+                    <h2>SEO Score</h2>
+                    <div class="score-circle">
+                        <span id="seoScore">0</span>/100
+                    </div>
+                </div>
+                <div class="quick-stats">
+                    <div class="stat-item">
+                        <span class="material-icons">assignment</span>
+                        <span class="stat-label">Meta Tags</span>
+                        <span id="metaStatus" class="stat-value">Checking...</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="material-icons">link</span>
+                        <span class="stat-label">Links</span>
+                        <span id="linkStatus" class="stat-value">Checking...</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="material-icons">speed</span>
+                        <span class="stat-label">Performance</span>
+                        <span id="perfStatus" class="stat-value">Checking...</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- On-Page SEO Tab -->
+            <section id="onpage" class="tab-content">
+                <div class="analysis-section">
+                    <h3>Title Tag</h3>
+                    <div id="titleAnalysis" class="analysis-item"></div>
+                    
+                    <h3>Meta Description</h3>
+                    <div id="metaDescAnalysis" class="analysis-item"></div>
+                    
+                    <h3>Headers Structure</h3>
+                    <div id="headersAnalysis" class="analysis-item"></div>
+                    
+                    <h3>Content Analysis</h3>
+                    <div id="contentAnalysis" class="analysis-item"></div>
+                </div>
+            </section>
+
+            <!-- Links Tab -->
+            <section id="links" class="tab-content">
+                <div class="links-summary">
+                    <div class="link-stat">
+                        <h3>Internal Links</h3>
+                        <span id="internalLinksCount">0</span>
+                    </div>
+                    <div class="link-stat">
+                        <h3>External Links</h3>
+                        <span id="externalLinksCount">0</span>
+                    </div>
+                    <div class="link-stat">
+                        <h3>Broken Links</h3>
+                        <span id="brokenLinksCount">0</span>
+                    </div>
+                </div>
+                <div id="linksList" class="links-list"></div>
+            </section>
+
+            <!-- Technical Tab -->
+            <section id="technical" class="tab-content">
+                <div class="technical-checks">
+                    <div class="check-item">
+                        <h3>Mobile Friendly</h3>
+                        <div id="mobileFriendly" class="check-result"></div>
+                    </div>
+                    <div class="check-item">
+                        <h3>Page Speed</h3>
+                        <div id="pageSpeed" class="check-result"></div>
+                    </div>
+                    <div class="check-item">
+                        <h3>SSL Status</h3>
+                        <div id="sslStatus" class="check-result"></div>
+                    </div>
+                    <div class="check-item">
+                        <h3>Robots.txt</h3>
+                        <div id="robotsTxt" class="check-result"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <button id="generateReport" class="primary-button">
+                Generate Report
+                <span class="material-icons">description</span>
+            </button>
+            <button id="exportData" class="secondary-button">
+                Export Data
+                <span class="material-icons">download</span>
+            </button>
+        </footer>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>

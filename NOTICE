@@ -1,0 +1,42 @@
+SEO Sentinel
+Copyright (c) 2025 SEO Sentinel
+
+This software includes the following third-party components:
+
+--------------------------------------------------------------------------------
+Chart.js
+License: MIT
+Copyright (c) 2014-2022 Chart.js Contributors
+https://www.chartjs.org/
+
+--------------------------------------------------------------------------------
+DOMPurify
+License: Apache License 2.0 & Mozilla Public License 2.0
+Copyright (c) 2015 Mario Heiderich
+https://github.com/cure53/DOMPurify
+
+--------------------------------------------------------------------------------
+marked
+License: MIT
+Copyright (c) 2018+, MarkedJS (https://github.com/markedjs/)
+Copyright (c) 2011-2018, Christopher Jeffrey
+https://marked.js.org/
+
+--------------------------------------------------------------------------------
+Material Icons
+License: Apache License 2.0
+Copyright (c) Google Inc.
+https://material.io/resources/icons/
+
+--------------------------------------------------------------------------------
+
+Full licenses for these components are available in the 'licenses' directory
+of this repository or through the links provided above.
+
+Additional Acknowledgments:
+- The SEO analysis algorithms are inspired by industry best practices and research
+- Icon designs are created using original artwork with inspiration from Material Design
+- Color schemes are selected following WCAG 2.1 accessibility guidelines
+
+For detailed contribution history and additional credits, please see:
+https://github.com/your-username/seo-sentinel/graphs/contributors

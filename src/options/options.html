@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Sentinel Settings</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="options.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <img src="../assets/icons/icon48.png" alt="SEO Sentinel Logo">
+                <h1>SEO Sentinel Settings</h1>
+            </div>
+            <div class="version">
+                Version <span id="version">1.0.0</span>
+            </div>
+        </header>
+
+        <main class="content">
+            <nav class="sidebar">
+                <ul class="nav-menu">
+                    <li class="nav-item active" data-tab="general">
+                        <span class="material-icons">settings</span>
+                        General
+                    </li>
+                    <li class="nav-item" data-tab="analysis">
+                        <span class="material-icons">analytics</span>
+                        Analysis Settings
+                    </li>
+                    <li class="nav-item" data-tab="rules">
+                        <span class="material-icons">rule</span>
+                        Custom Rules
+                    </li>
+                    <li class="nav-item" data-tab="api">
+                        <span class="material-icons">api</span>
+                        API Integration
+                    </li>
+                    <li class="nav-item" data-tab="notifications">
+                        <span class="material-icons">notifications</span>
+                        Notifications
+                    </li>
+                    <li class="nav-item" data-tab="export">
+                        <span class="material-icons">import_export</span>
+                        Import/Export
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="settings-content">
+                <!-- General Settings -->
+                <section id="general" class="settings-section active">
+                    <h2>General Settings</h2>
+                    
+                    <div class="setting-group">
+                        <h3>Appearance</h3>
+                        <div class="setting-item">
+                            <label for="theme">Theme</label>
+                            <select id="theme" name="theme">
+                                <option value="light">Light</option>
+                                <option value="dark">Dark</option>
+                                <option value="system">System Default</option>
+                            </select>
+                        </div>
+
+                        <div class="setting-item">
+                            <label for="fontSize">Font Size</label>
+                            <select id="fontSize" name="fontSize">
+                                <option value="small">Small</option>
+                                <option value="medium">Medium</option>
+                                <option value="large">Large</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>Behavior</h3>
+                        <div class="setting-item">
+                            <label class="switch-label">
+                                <input type="checkbox" id="autoAnalyze" name="autoAnalyze">
+                                <span class="switch"></span>
+                                Automatically analyze pages on load
+                            </label>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="switch-label">
+                                <input type="checkbox" id="contextMenu" name="contextMenu">
+                                <span class="switch"></span>
+                                Show in context menu
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Analysis Settings -->
+                <section id="analysis" class="settings-section">
+                    <h2>Analysis Settings</h2>
+
+                    <div class="setting-group">
+                        <h3>Analysis Depth</h3>
+                        <div class="setting-item">
+                            <label for="analysisDepth">Scan Depth</label>
+                            <select id="analysisDepth" name="analysisDepth">
+                                <option value="basic">Basic</option>
+                                <option value="standard">Standard</option>
+                                <option value="deep">Deep</option>
+                            </select>
+                        </div>
+
+                        <div class="setting-item">
+                            <label for="maxPages">Maximum Pages to Scan</label>
+                            <input type="number" id="maxPages" name="maxPages" min="1" max="100" value="10">
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>Analysis Components</h3>
+                        <div class="setting-item">
+                            <label class="switch-label">
+                                <input type="checkbox" id="checkMetaTags" name="checkMetaTags" checked>
+                                <span class="switch"></span>
+                                Meta Tags Analysis
+                            </label>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="switch-label">
+                                <input type="checkbox" id="checkLinks" name="checkLinks" checked>
+                                <span class="switch"></span>
+                                Link Analysis
+                            </label>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="switch-label">
+                                <input type="checkbox" id="checkImages" name="checkImages" checked>
+                                <span class="switch"></span>
+                                Image Analysis
+                            </label>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="switch-label">
+                                <input type="checkbox" id="checkPerformance" name="checkPerformance" checked>
+                                <span class="switch"></span>
+                                Performance Analysis
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Custom Rules -->
+                <section id="rules" class="settings-section">
+                    <h2>Custom Rules</h2>
+                    
+                    <div class="rules-container">
+                        <div class="rules-header">
+                            <button id="addRule" class="button primary">
+                                <span class="material-icons">add</span>
+                                Add New Rule
+                            </button>
+                        </div>
+
+                        <div id="rulesList" class="rules-list">
+                            <!-- Rules will be dynamically added here -->
+                        </div>
+                    </div>
+
+                    <template id="ruleTemplate">
+                        <div class="rule-item">
+                            <div class="rule-header">
+                                <input type="text" class="rule-name" placeholder="Rule Name">
+                                <div class="rule-actions">
+                                    <button class="button icon-button edit-rule">
+                                        <span class="material-icons">edit</span>
+                                    </button>
+                                    <button class="button icon-button delete-rule">
+                                        <span class="material-icons">delete</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="rule-content">
+                                <div class="rule-condition">
+                                    <select class="condition-type">
+                                        <option value="selector">CSS Selector</option>
+                                        <option value="regex">Regular Expression</option>
+                                        <option value="function">Custom Function</option>
+                                    </select>
+                                    <input type="text" class="condition-value" placeholder="Enter condition">
+                                </div>
+                                <div class="rule-action">
+                                    <select class="action-type">
+                                        <option value="warning">Show Warning</option>
+                                        <option value="error">Show Error</option>
+                                        <option value="info">Show Info</option>
+                                        <option value="custom">Custom Action</option>
+                                    </select>
+                                    <input type="text" class="action-value" placeholder="Enter message or action">
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </section>
+
+                <!-- API Integration -->
+                <section id="api" class="settings-section">
+                    <h2>API Integration</h2>
+
+                    <div class="setting-group">
+                        <h3>API Keys</h3>
+                        <div class="setting-item">
+                            <label for="googleApiKey">Google API Key</label>
+                            <input type="password" id="googleApiKey" name="googleApiKey" placeholder="Enter API key">
+                            <button class="button secondary show-hide-key">
+                                <span class="material-icons">visibility</span>
+                            </button>
+                        </div>
+
+                        <div class="setting-item">
+                            <label for="customApiKey">Custom API Key</label>
+                            <input type="password" id="customApiKey" name="customApiKey" placeholder="Enter API key">
+                            <button class="button secondary show-hide-key">
+                                <span class="material-icons">visibility</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>Endpoints</h3>
+                        <div class="setting-item">
+                            <label for="customEndpoint">Custom API Endpoint</label>
+                            <input type="url" id="customEndpoint" name="customEndpoint" placeholder="https://api.example.com">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Notifications -->
+                <section id="notifications" class="settings-section">
+                    <h2>Notifications</h2>
+
+                    <div class="setting-group">
+                        <h3>General Notifications</h3>
+                        <div class="setting-item">
+                            <label class="switch-label">
+                                <input type="checkbox" id="enableNotifications" name="enableNotifications" checked>
+                                <span class="switch"></span>
+                                Enable Notifications
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>Notification Types</h3>
+                        <div class="setting-item">
+                            <label class="switch-label">
+                                <input type="checkbox" id="notifyErrors" name="notifyErrors" checked>
+                                <span class="switch"></span>
+                                Critical Issues
+                            </label>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="switch-label">
+                                <input type="checkbox" id="notifyWarnings" name="notifyWarnings" checked>
+                                <span class="switch"></span>
+                                Warnings
+                            </label>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="switch-label">
+                                <input type="checkbox" id="notifyUpdates" name="notifyUpdates" checked>
+                                <span class="switch"></span>
+                                Updates and Improvements
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Import/Export -->
+                <section id="export" class="settings-section">
+                    <h2>Import/Export Settings</h2>
+
+                    <div class="setting-group">
+                        <h3>Export</h3>
+                        <div class="setting-item">
+                            <button id="exportSettings" class="button primary">
+                                <span class="material-icons">download</span>
+                                Export Settings
+                            </button>
+                            <p class="help-text">Download all settings including custom rules as a JSON file</p>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>Import</h3>
+                        <div class="setting-item">
+                            <input type="file" id="importFile" accept=".json" class="file-input">
+                            <label for="importFile" class="button secondary">
+                                <span class="material-icons">upload</span>
+                                Choose File
+                            </label>
+                            <button id="importSettings" class="button primary" disabled>
+                                <span class="material-icons">settings_backup_restore</span>
+                                Import Settings
+                            </button>
+                            <p class="help-text">Select a previously exported settings file to restore your configuration</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="actions">
+                <button id="resetSettings" class="button danger">
+                    Reset to Defaults
+                </button>
+                <div class="primary-actions">
+                    <button id="cancelChanges" class="button secondary">Cancel</button>
+                    <button id="saveSettings" class="button primary">Save Changes</button>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <div id="confirmationDialog" class="dialog">
+        <div class="dialog-content">
+            <h3>Confirm Action</h3>
+            <p id="confirmationMessage"></p>
+            <div class="dialog-actions">
+                <button id="cancelDialog" class="button secondary">Cancel</button>
+                <button id="confirmDialog" class="button primary">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="options.js"></script>
+</body>
+</html>
